@@ -1,0 +1,23 @@
+GOKOLLAB TRAINING - SITIO COMPLETO
+
+Incluye:
+- index.html (con los 3 módulos y 9 pistas de audio en cuestionarios)
+- assets/modulo1-infografia.png
+- assets/modulo1-ingreso.mp4
+- assets/modulo2-navegacion.mp4
+- assets/modulo2-guia-visual.pdf
+- assets/modulo3-actividades.mp4
+- assets/modulo3-guia-visual.pdf
+- assets/pistas/ (9 archivos mp3)
+
+PARA PUBLICAR CON GITHUB Y VERCEL
+1. Descomprimir este ZIP en tu computadora.
+2. Abrir el repositorio de GitHub vinculado al proyecto de Vercel.
+3. Subir index.html y la carpeta assets completa a la RAÍZ del repositorio (Add file > Upload files), sin subir la carpeta contenedora GoKollab_COMPLETO_GitHub.
+4. Confirmar los cambios (Commit changes) en la rama de producción del proyecto.
+5. En Vercel > Deployments, comprobar que el nuevo despliegue termina en Ready.
+6. Probar los 3 videos, la infografía, los PDF y las pistas de las 9 preguntas.
+
+NOTA: Si al subir archivos el navegador web de GitHub rechaza videos grandes, usar GitHub Desktop para hacer commit y push de esta carpeta, o solicitar instrucciones para el caso concreto.
+
+Todos los enlaces multimedia de index.html son relativos al directorio assets.

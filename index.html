@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>GoKoLab Training | Aula de capacitación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--blue:#3478f6;--blue-dark:#215fd0;--green:#10a982;--ink:#1d2939;--muted:#667085;--line:#e4e9f1;--bg:#f5f7fb;--white:#fff;--soft-blue:#eaf1ff;--soft-green:#e8f8f2;--soft-amber:#fff5dc;--soft-red:#fff0f0;--shadow:0 8px 28px rgba(25,45,85,.06);--radius:16px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);font-size:14px}button,a{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}.sidebar{width:258px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:100vh;position:sticky;top:0;height:100vh;overflow-y:auto}.brand{display:flex;align-items:center;gap:11px;padding:24px 22px 26px;border-bottom:1px solid var(--line);font-size:17px;font-weight:800;color:#0ea5a4;letter-spacing:-.5px}.brand-mark{width:33px;height:33px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#10b981);color:#fff;display:grid;place-items:center;font-size:16px}.nav-label{font-size:10px;font-weight:800;letter-spacing:1.2px;color:#98a2b3;padding:24px 22px 9px;text-transform:uppercase}.nav{padding:0 10px;display:grid;gap:4px}.nav-btn{width:100%;border:0;background:transparent;color:#596579;text-align:left;display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:10px;font-size:13px;transition:.2s}.nav-btn i{width:18px;text-align:center;font-size:15px}.nav-btn:hover{background:#f5f8ff;color:var(--blue)}.nav-btn.active{background:#e8f0ff;color:var(--blue);font-weight:700}.nav-btn .done-dot{margin-left:auto;color:var(--green);display:none}.nav-btn.completed .done-dot{display:block}.sidebar-foot{margin-top:auto;padding:18px 20px;color:#98a2b3;font-size:11px;line-height:1.6;border-top:1px solid var(--line)}.main{min-width:0;flex:1;display:flex;flex-direction:column}.topbar{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:20px}.top-title{font-size:14px;font-weight:700}.top-sub{color:var(--muted);font-size:12px;margin-top:4px}.top-right{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:12px}.progress-mini{width:125px;height:6px;border-radius:99px;background:#edf0f5;overflow:hidden}.progress-mini span{height:100%;display:block;background:linear-gradient(90deg,var(--blue),var(--green));width:0;transition:width .25s}.content{width:100%;max-width:1160px;margin:0 auto;padding:32px 36px 48px}.screen{display:none;animation:fade .22s ease}.screen.active{display:block}@keyframes fade{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}.eyebrow{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:12px}.hero{border-radius:22px;padding:38px 40px;background:linear-gradient(115deg,#eaf1ff 0%,#f1f8ff 54%,#e8faf4 100%);position:relative;overflow:hidden;margin-bottom:26px}.hero:after{content:"";position:absolute;width:240px;height:240px;border:35px solid rgba(59,130,246,.07);border-radius:50%;right:-55px;top:-70px}.hero h1{font-size:clamp(28px,3vw,38px);line-height:1.15;letter-spacing:-1.3px;margin:0 0 13px;max-width:630px}.hero p{color:#53627a;line-height:1.8;font-size:15px;max-width:650px;margin:0 0 22px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:11px 16px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:700;font-size:12px;transition:.2s}.btn:hover{transform:translateY(-1px);box-shadow:0 5px 15px #1e3a8a12}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{background:var(--blue-dark)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}.btn.ghost{background:transparent}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:flex;gap:13px;align-items:center}.stat-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:17px}.stat strong{font-size:20px;display:block}.stat small{color:var(--muted);font-size:11px;display:block;margin-top:4px}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 16px}.section-heading h2{font-size:21px;letter-spacing:-.5px;margin:0 0 5px}.section-heading p{margin:0;color:var(--muted);font-size:12px}.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.module-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px;display:flex;flex-direction:column;min-height:275px;box-shadow:0 3px 12px rgba(25,45,85,.02);transition:.2s}.module-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#cbd9f7}.module-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.module-icon{height:44px;width:44px;border-radius:13px;display:grid;place-items:center;font-size:18px;background:var(--soft-blue);color:var(--blue)}.module-number{font-size:10px;color:#98a2b3;font-weight:800;letter-spacing:1px}.module-card h3{font-size:17px;line-height:1.4;margin:0 0 9px}.module-card p{color:var(--muted);line-height:1.65;font-size:12px;margin:0 0 15px}.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}.tag{font-size:10px;padding:6px 8px;background:#f4f6fa;color:#596579;border-radius:7px;font-weight:600}.module-card .btn{margin-top:auto;width:100%}.welcome-note{border:1px solid #dce8ff;background:#f9fbff;border-radius:14px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;margin-top:23px}.welcome-note i{color:var(--blue);font-size:18px;margin-top:2px}.welcome-note strong{display:block;margin-bottom:5px}.welcome-note p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}.module-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:22px}.module-head h1{font-size:30px;letter-spacing:-.8px;margin:0 0 9px}.module-head p{color:var(--muted);line-height:1.7;margin:0;max-width:700px}.module-status{white-space:nowrap;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:11px;color:var(--muted)}.module-status strong{display:block;font-size:14px;color:var(--ink);margin-bottom:4px}.lesson-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.8fr);gap:20px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 3px 12px rgba(25,45,85,.025);overflow:hidden}.panel-pad{padding:23px}.panel-title{display:flex;align-items:center;gap:10px;font-size:16px;margin:0 0 17px}.panel-title i{color:var(--blue)}.media-player{background:#17253c;color:#fff;min-height:245px;display:flex;align-items:center;justify-content:center;text-align:center;padding:26px;position:relative}.media-player .play{width:62px;height:62px;background:#fff;color:var(--blue);border:0;border-radius:50%;font-size:20px;margin-bottom:13px;box-shadow:0 8px 25px #0002}.media-player h3{font-size:16px;margin:0 0 8px}.media-player p{font-size:12px;color:#c5d0e1;line-height:1.6;max-width:390px;margin:0 auto 15px}.media-player .media-label{font-size:10px;color:#b8c7dc;letter-spacing:1px;text-transform:uppercase}.media-player video,.media-player iframe{width:100%;aspect-ratio:16/9;border:0;display:block;background:#101b2b}.media-player audio{width:min(100%,440px)}.media-player:has(video),.media-player:has(iframe){padding:0;display:block;min-height:0}.media-player:has(audio){min-height:190px}.media-note{padding:12px 16px;background:#f8faff;color:var(--muted);font-size:11px;line-height:1.6;border-top:1px solid var(--line)}.lesson-text h3{font-size:16px;margin:0 0 12px}.lesson-text p{font-size:13px;line-height:1.8;color:#596579;margin:0 0 14px}.step-list{list-style:none;padding:0;margin:15px 0 0;display:grid;gap:12px}.step-list li{display:flex;gap:11px;align-items:flex-start;line-height:1.65;color:#596579;font-size:12px}.step-num{flex-shrink:0;width:25px;height:25px;border-radius:8px;background:var(--soft-blue);color:var(--blue);display:grid;place-items:center;font-size:11px;font-weight:800}.tip{background:var(--soft-green);border-left:3px solid var(--green);border-radius:10px;padding:14px 15px;margin-top:17px;color:#166b56;font-size:12px;line-height:1.7}.tip strong{display:block;margin-bottom:3px}.side-panel{display:grid;gap:16px}.checklist{display:grid;gap:13px}.check-row{display:flex;align-items:flex-start;gap:10px;color:#596579;font-size:12px;line-height:1.6}.check-row i{color:var(--green);margin-top:3px}.side-progress{height:7px;background:#edf0f5;border-radius:99px;overflow:hidden;margin:12px 0 8px}.side-progress span{height:100%;width:0;display:block;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .2s}.small-muted{font-size:11px;color:var(--muted);line-height:1.65}.quiz-wrap{margin-top:22px}.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.quiz-top h2{font-size:20px;margin:0}.quiz-count{font-size:11px;color:var(--muted);font-weight:700}.quiz-card{padding:24px}.quiz-progress{height:5px;background:#eef1f6;border-radius:99px;overflow:hidden;margin-bottom:22px}.quiz-progress span{height:100%;display:block;width:0;background:var(--blue);transition:width .2s}.question-text{font-size:17px;line-height:1.55;font-weight:700;margin:0 0 18px}.answers{display:grid;gap:10px}.answer{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--line);border-radius:11px;background:#fff;padding:13px 15px;color:#475467;line-height:1.5;font-size:13px;transition:.15s}.answer:hover{border-color:#a8c2fa;background:#f9fbff}.answer.selected{border-color:var(--blue);background:#edf4ff;color:#1d4ed8}.answer.correct{border-color:#55c69e;background:#edfbf5;color:#08744e}.answer.wrong{border-color:#f1a5a5;background:#fff3f3;color:#b42318}.answer .letter{width:27px;height:27px;flex-shrink:0;border-radius:8px;background:#f2f4f7;display:grid;place-items:center;font-weight:800;font-size:11px}.answer.selected .letter{background:var(--blue);color:#fff}.answer.correct .letter{background:var(--green);color:#fff}.answer.wrong .letter{background:#e5484d;color:#fff}.quiz-feedback{display:none;margin-top:15px;padding:13px 15px;border-radius:10px;font-size:12px;line-height:1.7}.quiz-feedback.show{display:block}.quiz-feedback.good{background:var(--soft-green);color:#08744e}.quiz-feedback.bad{background:var(--soft-red);color:#b42318}.quiz-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:22px}.quiz-result{text-align:center;padding:25px 10px}.result-icon{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--soft-green);color:var(--green);font-size:26px;margin:0 auto 16px}.quiz-result h3{font-size:22px;margin:0 0 8px}.quiz-result p{color:var(--muted);line-height:1.7;max-width:500px;margin:0 auto 20px}.result-score{font-size:35px;font-weight:800;color:var(--blue);margin:12px 0}.module-footer{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:20px;margin-top:24px}.module-footer .btn{min-width:130px}.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.about-card{padding:23px;background:#fff;border:1px solid var(--line);border-radius:15px}.about-card h3{margin:0 0 10px;font-size:16px}.about-card p{font-size:12px;color:var(--muted);line-height:1.8;margin:0}.team-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.team-member{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px;text-align:center}.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#10b981);display:grid;place-items:center;color:#fff;margin:0 auto 10px;font-weight:800}.team-member strong{display:block;font-size:12px}.team-member span{font-size:10px;color:var(--muted);display:block;margin-top:5px}.progress-list{display:grid;gap:13px}.progress-item{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;display:flex;align-items:center;gap:15px}.progress-item .module-icon{flex-shrink:0}.progress-item-main{flex:1;min-width:0}.progress-item h3{font-size:13px;margin:0 0 7px}.progress-item p{font-size:11px;color:var(--muted);margin:0}.progress-item .side-progress{max-width:280px}.pill{font-size:10px;font-weight:800;padding:6px 9px;border-radius:99px;background:#f2f4f7;color:#667085;white-space:nowrap}.pill.done{background:var(--soft-green);color:#08744e}.toast{position:fixed;bottom:20px;right:20px;background:#17253c;color:#fff;padding:13px 17px;border-radius:11px;box-shadow:var(--shadow);font-size:12px;display:none;z-index:20}.toast.show{display:block;animation:fade .2s}.mobile-menu{display:none}
+@media(max-width:1050px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.lesson-layout{grid-template-columns:1fr}.side-panel{grid-template-columns:repeat(2,minmax(0,1fr))}.team-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.app{display:block}.sidebar{position:fixed;z-index:15;left:0;top:0;bottom:0;width:270px;height:100dvh;transform:translateX(-102%);transition:transform .25s;box-shadow:12px 0 30px #17253c14}.sidebar.open{transform:translateX(0)}.mobile-menu{display:inline-flex}.topbar{height:68px;padding:0 17px}.top-right .progress-label{display:none}.progress-mini{width:76px}.content{padding:22px 16px 35px}.hero{padding:27px 22px;border-radius:17px}.hero h1{font-size:29px}.hero p{font-size:13px}.stats{gap:8px}.stat{padding:12px;display:block}.stat-icon{width:34px;height:34px;margin-bottom:10px}.stat strong{font-size:18px}.stat small{font-size:10px}.module-grid{grid-template-columns:1fr}.module-card{min-height:0}.module-head{display:block}.module-head h1{font-size:26px}.module-status{display:inline-block;margin-top:14px}.side-panel{grid-template-columns:1fr}.panel-pad{padding:18px}.media-player{min-height:220px}.quiz-card{padding:18px}.question-text{font-size:15px}.module-footer{flex-wrap:wrap}.module-footer .btn{flex:1;min-width:0}.about-grid{grid-template-columns:1fr}.team-list{grid-template-columns:repeat(2,1fr)}.progress-item{align-items:flex-start;flex-wrap:wrap}.progress-item-main{min-width:calc(100% - 70px)}.progress-item .pill{margin-left:58px}.section-heading{align-items:flex-start;flex-direction:column}.top-title{font-size:12px}.top-sub{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Pistas de audio en los cuestionarios */
+.audio-hint{margin-top:16px;border:1px solid #d9e7fd;background:#f6f9ff;border-radius:12px;padding:14px 16px}
+.audio-hint-head{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;color:#215fd0}
+.audio-hint p{font-size:12px;color:#596579;line-height:1.55;margin:7px 0 10px}
+.audio-hint audio{display:block;width:100%;max-width:420px;height:42px}
+.audio-hint small{display:block;color:#667085;margin-top:7px;font-size:11px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></span><span>GoKoLab Training</span></div>
+    <div class="nav-label">Inicio</div>
+    <nav class="nav">
+      <button class="nav-btn active" data-screen="home"><i class="fa-solid fa-house"></i> Bienvenida <i class="fa-solid fa-circle-check done-dot"></i></button>
+      <button class="nav-btn" data-screen="about"><i class="fa-solid fa-users"></i> Quiénes somos</button>
+    </nav>
+    <div class="nav-label">Tu recorrido</div>
+    <nav class="nav">
+      <button class="nav-btn" data-screen="module1"><i class="fa-solid fa-right-to-bracket"></i> Módulo 1 · Acceso <i class="fa-solid fa-circle-check done-dot"></i></button>
+      <button class="nav-btn" data-screen="module2"><i class="fa-solid fa-play-circle"></i> Módulo 2 · Aula y clases <i class="fa-solid fa-circle-check done-dot"></i></button>
+      <button class="nav-btn" data-screen="module3"><i class="fa-solid fa-list-check"></i> Módulo 3 · Actividades <i class="fa-solid fa-circle-check done-dot"></i></button>
+    </nav>
+    <div class="nav-label">Seguimiento</div>
+    <nav class="nav"><button class="nav-btn" data-screen="progress"><i class="fa-solid fa-chart-line"></i> Mi progreso</button></nav>
+    <div class="sidebar-foot">Capacitación de uso del aula virtual<br>Aprendé a tu ritmo · Volvé cuando lo necesites</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn mobile-menu" id="menuToggle" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+        <div><div class="top-title" id="topTitle">Bienvenida a GoKoLab</div><div class="top-sub" id="topSubtitle">Tu guía para aprender a usar el aula virtual</div></div>
+      </div>
+      <div class="top-right"><span class="progress-label">Progreso general</span><div class="progress-mini"><span id="topProgress"></span></div><strong id="topProgressText">0%</strong></div>
+    </header>
+
+    <div class="content">
+      <section class="screen active" id="screen-home">
+        <div class="hero">
+          <div class="eyebrow">Capacitación paso a paso</div>
+          <h1>¡Bienvenido/a al aula virtual de GoKoLab!</h1>
+          <p>En esta guía vas a aprender a ingresar a tu cuenta, encontrar tus clases, completar cuestionarios, entregar tareas y seguir tu progreso. Avanzá a tu ritmo y volvé a consultar cada tema cuando lo necesites.</p>
+          <button class="btn primary" data-go="module1">Empezar capacitación <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="stat-icon" style="background:#eaf1ff;color:#3478f6"><i class="fa-solid fa-book-open"></i></div><div><strong>3</strong><small>Módulos de aprendizaje</small></div></div>
+          <div class="stat"><div class="stat-icon" style="background:#e8f8f2;color:#10a982"><i class="fa-solid fa-circle-play"></i></div><div><strong>Multimedia</strong><small>Videos, infografías y explicación escrita</small></div></div>
+          <div class="stat"><div class="stat-icon" style="background:#fff5dc;color:#c48a13"><i class="fa-solid fa-list-check"></i></div><div><strong>Práctica</strong><small>Cuestionarios breves por módulo</small></div></div>
+        </div>
+        <div class="section-heading"><div><h2>Tu recorrido de aprendizaje</h2><p>Completá los módulos en orden para conocer todas las funciones principales.</p></div></div>
+        <div class="module-grid">
+          <article class="module-card"><div class="module-card-top"><div class="module-icon"><i class="fa-solid fa-right-to-bracket"></i></div><span class="module-number">MÓDULO 01</span></div><h3>Conocé GoKoLab y accedé al aula</h3><p>Familiarizate con la plataforma, aprendé a ingresar y conocé las opciones para mantener segura tu cuenta.</p><div class="tag-row"><span class="tag">Registro</span><span class="tag">Inicio de sesión</span><span class="tag">Seguridad</span></div><button class="btn" data-go="module1">Ir al módulo <i class="fa-solid fa-arrow-right"></i></button></article>
+          <article class="module-card"><div class="module-card-top"><div class="module-icon" style="background:#e8f8f2;color:#0a9875"><i class="fa-solid fa-play"></i></div><span class="module-number">MÓDULO 02</span></div><h3>Navegá y aprendé dentro del aula</h3><p>Ubicá las secciones principales, reproducí clases y encontrá los materiales que acompañan cada tema.</p><div class="tag-row"><span class="tag">Navegación</span><span class="tag">Clases</span><span class="tag">Materiales</span></div><button class="btn" data-go="module2">Ir al módulo <i class="fa-solid fa-arrow-right"></i></button></article>
+          <article class="module-card"><div class="module-card-top"><div class="module-icon" style="background:#fff5dc;color:#b77908"><i class="fa-solid fa-list-check"></i></div><span class="module-number">MÓDULO 03</span></div><h3>Evaluaciones, tareas y seguimiento</h3><p>Practicá cómo responder cuestionarios, entregar trabajos, revisar calificaciones y comunicarte.</p><div class="tag-row"><span class="tag">Cuestionarios</span><span class="tag">Tareas</span><span class="tag">Progreso</span></div><button class="btn" data-go="module3">Ir al módulo <i class="fa-solid fa-arrow-right"></i></button></article>
+        </div>
+        <div class="welcome-note"><i class="fa-regular fa-lightbulb"></i><div><strong>Un consejo antes de empezar</strong><p>Tené a mano tus datos de acceso y dedicá unos minutos a cada tema. Mirá el video, consultá la infografía, practicá los pasos y completá el cuestionario para comprobar lo aprendido.</p></div></div>
+      </section>
+
+      <section class="screen" id="screen-about">
+        <div class="eyebrow">Sobre esta capacitación</div><div class="section-heading" style="margin-top:0"><div><h2>Quiénes somos</h2><p>Una guía creada para acompañarte en tus primeros pasos dentro del aula virtual.</p></div></div>
+        <div class="about-grid">
+          <article class="about-card"><h3><i class="fa-solid fa-bullseye" style="color:var(--blue);margin-right:8px"></i>Nuestra misión</h3><p>Somos estudiantes de 4.º año de Ingeniería en Sistemas de la Universidad Tecnológica Nacional, Facultad Regional Córdoba. Desarrollamos esta capacitación en el marco de la cátedra Comunicación Multimedial en el Desarrollo de Sistemas de Información.</p></article>
+          <article class="about-card"><h3><i class="fa-solid fa-handshake-angle" style="color:var(--green);margin-right:8px"></i>Aprendizaje acompañado</h3><p>Buscamos explicar cada paso de manera clara, práctica y cercana. La idea es que puedas avanzar a tu propio ritmo, repasar los contenidos y resolver dudas mientras conocés la plataforma.</p></article>
+        </div>
+        <div class="section-heading"><div><h2>El equipo</h2><p>Estudiantes que llevaron adelante este proyecto.</p></div></div>
+        <div class="team-list">
+          <div class="team-member"><div class="avatar">JL</div><strong>Jeremías López Ferreyra</strong><span>Desarrollo de interfaces</span></div>
+          <div class="team-member"><div class="avatar">IC</div><strong>Ignacio Cuello</strong><span>Backend y arquitectura</span></div>
+          <div class="team-member"><div class="avatar">FG</div><strong>Francisco González</strong><span>Experiencia de usuario</span></div>
+          <div class="team-member"><div class="avatar">MB</div><strong>Martín Boiero</strong><span>Integración y datos</span></div>
+        </div>
+        <div class="module-footer"><button class="btn" data-go="home"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</button><button class="btn primary" data-go="module1">Empezar <i class="fa-solid fa-arrow-right"></i></button></div>
+      </section>
+
+      <section class="screen module-screen" id="screen-module1" data-module="1">
+        <div class="eyebrow">Módulo 01 · Orientación inicial</div>
+        <div class="module-head"><div><h1>Conocé GoKoLab y accedé al aula</h1><p>Aprendé cómo ingresar a la plataforma, acceder a tu cuenta y resolver inconvenientes comunes de inicio de sesión.</p></div><div class="module-status"><strong id="status-module1">Pendiente</strong><span>Estado del módulo</span></div></div>
+        <div class="lesson-layout">
+          <div class="panel">
+            <div class="media-player" id="media-module1">
+              <video controls preload="metadata" playsinline aria-label="Video tutorial de primer ingreso a GoKollab">
+                <source src="assets/modulo1-ingreso.mp4" type="video/mp4">
+                Tu navegador no puede reproducir este video. <a href="assets/modulo1-ingreso.mp4">Descargá el tutorial</a>.
+              </video>
+            </div>
+            <div class="media-note"><i class="fa-solid fa-circle-play"></i> Video · Tu primer ingreso a GoKollab · 1 min 52 s. Podés pausar y volver a mirar cualquier paso.</div>
+            <div class="panel-pad" style="border-bottom:1px solid var(--line)">
+              <h3 class="panel-title"><i class="fa-solid fa-image"></i> Infografía: tus primeros pasos</h3>
+              <p class="small-muted">Una guía visual para consultar cuando necesites volver a entrar o encontrar tus cursos.</p>
+              <a href="assets/modulo1-infografia.png" target="_blank" rel="noopener" title="Abrir la infografía en una pestaña nueva"><img src="assets/modulo1-infografia.png" alt="Infografía de cuatro pasos para ingresar a GoKollab, iniciar sesión, encontrar cursos y resolver problemas de acceso" loading="lazy" style="width:100%;height:auto;border:1px solid var(--line);border-radius:12px;margin:10px 0 14px;display:block"></a>
+              <a class="btn" href="assets/modulo1-infografia.png" download="Guia-primeros-pasos-GoKollab.png"><i class="fa-solid fa-download"></i> Descargar infografía</a>
+            </div>
+            <div class="panel-pad lesson-text">
+              <h3><i class="fa-solid fa-book-open" style="color:var(--blue);margin-right:7px"></i> Guía paso a paso</h3>
+              <p>Para comenzar, utilizá el enlace de acceso que recibiste y seguí el procedimiento indicado para tu cuenta. Después, iniciá sesión y buscá los cursos que tenés disponibles.</p>
+              <ol class="step-list"><li><span class="step-num">1</span><span><strong>Ingresá al sitio.</strong> Abrí GoKoLab desde tu navegador habitual.</span></li><li><span class="step-num">2</span><span><strong>Prepará tu acceso.</strong> Si recibiste un enlace para establecer tu contraseña, seguí sus indicaciones.</span></li><li><span class="step-num">3</span><span><strong>Iniciá sesión.</strong> Ingresá tu correo y contraseña en los campos correspondientes.</span></li><li><span class="step-num">4</span><span><strong>Encontrá tu curso.</strong> Una vez dentro, identificá el curso que querés realizar. Si no podés ingresar, revisá los datos y contactá a soporte cuando sea necesario.</span></li></ol>
+              <div class="tip"><strong><i class="fa-solid fa-shield-halved"></i> Cuidá tu cuenta</strong>No compartas tu contraseña. Si usás un equipo compartido, cerrá sesión cuando termines.</div>
+            </div>
+          </div>
+          <div class="side-panel">
+            <div class="panel panel-pad"><h3 class="panel-title"><i class="fa-solid fa-list-check"></i> Al terminar este módulo</h3><div class="checklist"><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Reconocer dónde acceder a la plataforma.</span></div><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Reconocer cómo iniciar sesión con tus datos de acceso.</span></div><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Identificar tus cursos y saber qué revisar si no podés ingresar.</span></div></div></div>
+            <div class="panel panel-pad"><h3 class="panel-title"><i class="fa-solid fa-award"></i> Tu avance</h3><div class="small-muted">Completá el cuestionario para marcar este módulo como aprobado.</div><div class="side-progress"><span id="progress-module1"></span></div><div class="small-muted" id="progress-label-module1">Cuestionario pendiente</div></div>
+          </div>
+        </div>
+        <div class="quiz-wrap" id="quiz-module1"></div>
+        <div class="module-footer"><button class="btn" data-go="home"><i class="fa-solid fa-arrow-left"></i> Inicio</button><button class="btn primary" data-next="module2">Siguiente módulo <i class="fa-solid fa-arrow-right"></i></button></div>
+      </section>
+
+      <section class="screen module-screen" id="screen-module2" data-module="2">
+        <div class="eyebrow">Módulo 02 · Uso de la plataforma</div>
+        <div class="module-head"><div><h1>Navegá y aprendé dentro del aula</h1><p>Conocé la organización del aula virtual, cómo encontrar tus clases y dónde consultar materiales complementarios.</p></div><div class="module-status"><strong id="status-module2">Pendiente</strong><span>Estado del módulo</span></div></div>
+        <div class="lesson-layout">
+          <div class="panel">
+            <div class="media-player" id="media-module2">
+              <video controls preload="metadata" playsinline aria-label="Video tutorial para navegar por GoKollab">
+                <source src="assets/modulo2-navegacion.mp4" type="video/mp4">
+                Tu navegador no puede reproducir este video. <a href="assets/modulo2-navegacion.mp4">Descargá el tutorial</a>.
+              </video>
+            </div>
+            <div class="media-note"><i class="fa-solid fa-circle-info"></i> Tutorial de navegación por comunidades, secciones del curso y clases en video. Podés pausarlo y volver a mirarlo cuando quieras.</div>
+            <div class="panel-pad" style="border-bottom:1px solid var(--line)">
+              <h3 class="panel-title"><i class="fa-solid fa-file-pdf"></i> Guía visual: clases y materiales</h3>
+              <p class="small-muted">Consultá los 4 pasos con capturas reales de GoKollab: comunidad, Conversación, Aprendizaje y archivos adjuntos dentro de la clase.</p>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+                <a class="btn primary" href="assets/modulo2-guia-visual.pdf" target="_blank" rel="noopener" aria-label="Abrir guía visual del módulo 2 en PDF"><i class="fa-solid fa-eye"></i> Ver guía visual (PDF)</a>
+                <a class="btn" href="assets/modulo2-guia-visual.pdf" download="GoKollab-Guia-Visual-Modulo-2.pdf"><i class="fa-solid fa-download"></i> Descargar PDF</a>
+              </div>
+            </div>
+            <div class="panel-pad lesson-text">
+              <h3><i class="fa-solid fa-book-open" style="color:var(--blue);margin-right:7px"></i> Guía paso a paso</h3>
+              <p>Desde <strong>Mis comunidades</strong>, ingresá a tu curso. La pestaña <strong>Conversación</strong> muestra avisos y publicaciones; en <strong>Aprendizaje</strong> encontrás los contenidos y clases disponibles.</p>
+              <ol class="step-list"><li><span class="step-num">1</span><span><strong>Entrá a tu comunidad.</strong> Desde Mis comunidades, seleccioná el curso que querés realizar.</span></li><li><span class="step-num">2</span><span><strong>Consultá Conversación.</strong> Revisá avisos, publicaciones y novedades del curso.</span></li><li><span class="step-num">3</span><span><strong>Buscá tus clases en Aprendizaje.</strong> Elegí el contenido y abrí la clase correspondiente.</span></li><li><span class="step-num">4</span><span><strong>Reproducí y descargá.</strong> Mirá el video de la clase, navegá por la lista de lecciones a la derecha y buscá los materiales en <strong>Archivos adjuntos</strong> para descargarlos.</span></li></ol>
+              <div class="tip"><strong><i class="fa-solid fa-lightbulb"></i> Para estudiar mejor</strong>Si un tema no queda claro, pausá la clase, revisá el material complementario y volvé a reproducir el fragmento que necesitás.</div>
+            </div>
+          </div>
+          <div class="side-panel">
+            <div class="panel panel-pad"><h3 class="panel-title"><i class="fa-solid fa-folder-open"></i> Recordá</h3><div class="checklist"><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Las clases te permiten revisar las explicaciones.</span></div><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Los materiales complementan lo visto en clase.</span></div><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Podés volver a consultar los recursos cuando estén disponibles.</span></div></div></div>
+            <div class="panel panel-pad"><h3 class="panel-title"><i class="fa-solid fa-award"></i> Tu avance</h3><div class="small-muted">Completá el cuestionario para marcar este módulo como aprobado.</div><div class="side-progress"><span id="progress-module2"></span></div><div class="small-muted" id="progress-label-module2">Cuestionario pendiente</div></div>
+          </div>
+        </div>
+        <div class="quiz-wrap" id="quiz-module2"></div>
+        <div class="module-footer"><button class="btn" data-go="module1"><i class="fa-solid fa-arrow-left"></i> Módulo anterior</button><button class="btn primary" data-next="module3">Siguiente módulo <i class="fa-solid fa-arrow-right"></i></button></div>
+      </section>
+
+      <section class="screen module-screen" id="screen-module3" data-module="3">
+        <div class="eyebrow">Módulo 03 · Práctica y seguimiento</div>
+        <div class="module-head"><div><h1>Evaluaciones, tareas y seguimiento</h1><p>Aprendé a completar cuestionarios, entregar trabajos y consultar la información sobre tu desempeño y comunicación académica.</p></div><div class="module-status"><strong id="status-module3">Pendiente</strong><span>Estado del módulo</span></div></div>
+        <div class="lesson-layout">
+          <div class="panel">
+            <div class="media-player" id="media-module3"><video controls playsinline preload="metadata" aria-label="Video tutorial: tareas, evaluaciones y consultas en GoKollab"><source src="assets/modulo3-actividades.mp4" type="video/mp4">Tu navegador no permite reproducir este video.</video></div>
+            <div class="media-note"><i class="fa-solid fa-circle-info"></i> Tutorial real: entrega de tareas, evaluación, resultados y mensajería. Pausá cuando necesites repetir un paso.</div>
+            <div class="panel-pad" style="border-bottom:1px solid var(--line)">
+              <h3 class="panel-title"><i class="fa-solid fa-file-pdf"></i> Guía visual: actividades y consultas</h3>
+              <p class="small-muted">Cuatro pasos ilustrados para repasar el video cuando lo necesites.</p>
+              <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:13px">
+                <a class="btn primary" href="assets/modulo3-guia-visual.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-eye"></i> Ver guía visual (PDF)</a>
+                <a class="btn" href="assets/modulo3-guia-visual.pdf" download="GoKollab-Guia-Visual-Modulo-3.pdf"><i class="fa-solid fa-download"></i> Descargar PDF</a>
+              </div>
+            </div>
+            <div class="panel-pad lesson-text">
+              <h3><i class="fa-solid fa-book-open" style="color:var(--blue);margin-right:7px"></i> Guía paso a paso</h3>
+              <p>En GoKollab, las entregas se realizan desde la publicación indicada en Conversación, mientras que las evaluaciones se encuentran en Aprendizaje. Seguí siempre la consigna de tu docente.</p>
+              <ol class="step-list"><li><span class="step-num">1</span><span><strong>Entregá tareas:</strong> buscá la publicación de entrega en Conversación, adjuntá el archivo y comprobá que aparezca publicado.</span></li><li><span class="step-num">2</span><span><strong>Respondé evaluaciones:</strong> entrá en Aprendizaje, elegí la evaluación disponible, respondé y confirmá el envío.</span></li><li><span class="step-num">3</span><span><strong>Revisá resultados:</strong> consultá el resultado mostrado al terminar y seguí las indicaciones si necesitás otro intento.</span></li><li><span class="step-num">4</span><span><strong>Pedí ayuda:</strong> utilizá Conversación o la mensajería disponible y explicá tu consulta con claridad.</span></li></ol>
+              <div class="tip"><strong><i class="fa-solid fa-circle-check"></i> Antes de terminar</strong>Revisá que tu archivo se haya publicado o que la evaluación muestre un resultado. Si no hay confirmación, consultá las instrucciones o pedí ayuda.</div>
+            </div>
+          </div>
+          <div class="side-panel">
+            <div class="panel panel-pad"><h3 class="panel-title"><i class="fa-solid fa-clipboard-check"></i> Antes de enviar</h3><div class="checklist"><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Leí todas las instrucciones.</span></div><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Revisé las respuestas o el archivo.</span></div><div class="check-row"><i class="fa-solid fa-circle-check"></i><span>Comprobé la confirmación de envío.</span></div></div></div>
+            <div class="panel panel-pad"><h3 class="panel-title"><i class="fa-solid fa-award"></i> Tu avance</h3><div class="small-muted">Completá el cuestionario para terminar la capacitación.</div><div class="side-progress"><span id="progress-module3"></span></div><div class="small-muted" id="progress-label-module3">Cuestionario pendiente</div></div>
+          </div>
+        </div>
+        <div class="quiz-wrap" id="quiz-module3"></div>
+        <div class="module-footer"><button class="btn" data-go="module2"><i class="fa-solid fa-arrow-left"></i> Módulo anterior</button><button class="btn primary" data-go="progress">Ver mi progreso <i class="fa-solid fa-arrow-right"></i></button></div>
+      </section>
+
+      <section class="screen" id="screen-progress">
+        <div class="eyebrow">Seguimiento personal</div><div class="section-heading" style="margin-top:0"><div><h2>Mi progreso</h2><p>Consultá el estado de los tres módulos de esta capacitación en este dispositivo.</p></div></div>
+        <div class="hero" style="padding:27px 30px"><div class="eyebrow">Tu recorrido</div><h1 style="font-size:29px" id="progressHeadline">¡Vamos paso a paso!</h1><p id="progressDescription">Completá cada cuestionario para actualizar tu progreso.</p><div class="side-progress" style="max-width:420px;background:#ffffffb5;height:9px"><span id="overallBar"></span></div><strong id="overallLabel">0 de 3 módulos completados</strong></div>
+        <div class="progress-list" id="progressList"></div>
+        <div class="welcome-note"><i class="fa-solid fa-circle-info"></i><div><strong>Importante</strong><p>Este prototipo guarda el progreso en el almacenamiento local de este navegador. No envía resultados a docentes ni sincroniza entre dispositivos. Para registrar el avance real de cada alumno se necesita una integración con un sistema de usuarios y una base de datos.</p></div></div>
+        <div class="module-footer"><button class="btn" data-go="home"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</button><button class="btn primary" data-go="module1">Continuar aprendiendo <i class="fa-solid fa-arrow-right"></i></button></div>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const moduleInfo={
+ module1:{title:"Conocé GoKoLab y accedé al aula",short:"Acceso al aula",icon:"fa-right-to-bracket",questions:[
+  {q:"¿Qué conviene hacer para iniciar sesión?",options:["Ingresar los datos de acceso en los campos correspondientes","Compartir la contraseña con un compañero","Crear una cuenta nueva cada vez"],correct:0,explain:"Usá los datos asociados a tu cuenta. Si no podés ingresar, revisá que estén escritos correctamente."},
+  {q:"¿Qué deberías hacer si olvidás tu contraseña?",options:["Probar contraseñas al azar muchas veces","Buscar la opción de recuperación de contraseña si está disponible","Crear varios perfiles sin consultar"],correct:1,explain:"La recuperación de contraseña, cuando está habilitada, permite seguir el procedimiento para restablecer el acceso."},
+  {q:"¿Cuál es una buena práctica de seguridad?",options:["Dejar la sesión abierta en cualquier computadora","Compartir la contraseña para que alguien entre por vos","Cerrar sesión al terminar en un equipo compartido"],correct:2,explain:"Cerrar sesión en equipos compartidos ayuda a proteger tu cuenta."}
+ ]},
+ module2:{title:"Navegá y aprendé dentro del aula",short:"Aula y clases",icon:"fa-play-circle",questions:[
+  {q:"¿Qué conviene hacer primero al entrar al aula virtual?",options:["Explorar el menú para reconocer sus secciones","Enviar una tarea sin leer la consigna","Cerrar la sesión"],correct:0,explain:"Reconocer el menú te ayuda a ubicar clases, actividades y materiales."},
+  {q:"Si necesitás repasar una explicación, ¿qué podés hacer?",options:["Evitar volver a consultar el tema","Volver a reproducir el fragmento de la clase","Borrar el material"],correct:1,explain:"Cuando los recursos están disponibles, podés volver a consultar la clase y repasar el fragmento que necesitás."},
+  {q:"¿Para qué sirven los materiales complementarios?",options:["Para reemplazar todas las consignas","Para evitar revisar las clases","Para acompañar y ampliar lo trabajado en clase"],correct:2,explain:"Los materiales complementarios ayudan a reforzar los temas vistos en las clases."}
+ ]},
+ module3:{title:"Evaluaciones, tareas y seguimiento",short:"Actividades",icon:"fa-list-check",questions:[
+  {q:"Antes de enviar un cuestionario, ¿qué deberías hacer?",options:["Seleccionar cualquier opción rápidamente","Revisar las respuestas y las instrucciones","Cerrar la página sin enviar"],correct:1,explain:"Antes de confirmar una evaluación, revisá las respuestas y las instrucciones para detectar posibles errores."},
+  {q:"¿Qué deberías comprobar después de adjuntar una tarea?",options:["Que se haya cerrado el navegador","Que el archivo aparezca en la publicación enviada","Que hayas salido de la comunidad"],correct:1,explain:"Verificá que el archivo esté publicado y sea el que solicitó el docente."},
+  {q:"Si tenés una duda sobre una evaluación, ¿qué conviene hacer?",options:["Compartir tu contraseña","Mandar mensajes repetidos sin explicar el problema","Escribir una consulta clara en el canal de comunicación disponible"],correct:2,explain:"Explicá la actividad, qué ocurrió y qué necesitás aclarar."}
+ ]}
+};
+const screenTitles={home:["Bienvenida a GoKoLab","Tu guía para aprender a usar el aula virtual"],about:["Quiénes somos","Sobre esta capacitación"],module1:["Módulo 1 · Acceso al aula","Conocé GoKoLab y accedé al aula"],module2:["Módulo 2 · Aula y clases","Navegá y aprendé dentro del aula"],module3:["Módulo 3 · Actividades","Evaluaciones, tareas y seguimiento"],progress:["Mi progreso","Seguimiento de tu capacitación"]};
+let currentScreen="home";
+let quizState={};
+let completed=loadProgress();
+function loadProgress(){try{return JSON.parse(localStorage.getItem("gokolab-training-progress")||"{}")}catch(e){return {}}}
+function saveProgress(){try{localStorage.setItem("gokolab-training-progress",JSON.stringify(completed))}catch(e){}}
+function navigate(screen){
+ if(!document.getElementById("screen-"+screen))return;
+ currentScreen=screen;
+ document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id==="screen-"+screen));
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.screen===screen));
+ const titles=screenTitles[screen]||screenTitles.home;
+ document.getElementById("topTitle").textContent=titles[0];
+ document.getElementById("topSubtitle").textContent=titles[1];
+ document.getElementById("sidebar").classList.remove("open");
+ window.scrollTo({top:0,behavior:"smooth"});
+ updateProgressUI();
+}
+function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2800)}
+function buildQuiz(id){
+ const data=moduleInfo[id],host=document.getElementById("quiz-"+id);
+ host.innerHTML=`<div class="quiz-top"><h2><i class="fa-solid fa-list-check" style="color:var(--blue);margin-right:8px"></i>Comprobá lo aprendido</h2><span class="quiz-count" id="${id}-quiz-count"></span></div><div class="panel quiz-card" id="${id}-quiz-card"></div>`;
+ quizState[id]={index:0,answers:[],submitted:false};
+ renderQuestion(id);
+}
+function renderQuestion(id){
+ const data=moduleInfo[id],state=quizState[id],card=document.getElementById(id+"-quiz-card");
+ if(state.submitted){renderResult(id);return}
+ const q=data.questions[state.index],letters=["A","B","C","D"];
+ document.getElementById(id+"-quiz-count").textContent=`Pregunta ${state.index+1} de ${data.questions.length}`;
+ card.innerHTML=`<div class="quiz-progress"><span style="width:${((state.index+1)/data.questions.length)*100}%"></span></div><p class="question-text">${q.q}</p><div class="answers">${q.options.map((op,i)=>`<button class="answer ${state.answers[state.index]===i?"selected":""}" data-answer="${i}"><span class="letter">${letters[i]}</span><span>${op}</span></button>`).join("")}</div><div class="audio-hint"><div class="audio-hint-head"><i class="fa-solid fa-headphones" aria-hidden="true"></i> ¿Necesitás una pista?</div><p>Escuchá una orientación breve antes de elegir tu respuesta. Es opcional.</p><audio controls preload="none" aria-label="Pista de audio para la pregunta ${state.index+1} del módulo ${id.replace('module','')}"><source src="assets/pistas/m${id.replace('module','')}_pista${state.index+1}.mp3" type="audio/mpeg">Tu navegador no admite audio MP3.</audio><small>La pista te ayuda a razonar, sin revelar la respuesta.</small></div><div class="quiz-feedback" id="${id}-feedback"></div><div class="quiz-actions"><button class="btn" id="${id}-back" ${state.index===0?"disabled":""}><i class="fa-solid fa-arrow-left"></i> Anterior</button><button class="btn primary" id="${id}-next">${state.index===data.questions.length-1?"Ver resultado":"Siguiente pregunta"} <i class="fa-solid fa-arrow-right"></i></button></div>`;
+ card.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>{
+  if(state.answers[state.index]!==undefined)return;
+  state.answers[state.index]=Number(b.dataset.answer);
+  const isCorrect=state.answers[state.index]===q.correct;
+  card.querySelectorAll(".answer").forEach((a,i)=>{a.disabled=true;if(i===q.correct)a.classList.add("correct");else if(i===state.answers[state.index])a.classList.add("wrong")});
+  const fb=document.getElementById(id+"-feedback");fb.className="quiz-feedback show "+(isCorrect?"good":"bad");fb.innerHTML=`<strong>${isCorrect?"¡Correcto!":"Repasemos esta respuesta."}</strong> ${q.explain}`;
+ }));
+ document.getElementById(id+"-back").addEventListener("click",()=>{if(state.index>0){state.index--;renderQuestion(id)}});
+ document.getElementById(id+"-next").addEventListener("click",()=>{
+  if(state.answers[state.index]===undefined){toast("Elegí una respuesta para continuar.");return}
+  if(state.index<data.questions.length-1){state.index++;renderQuestion(id)}else{state.submitted=true;renderResult(id)}
+ });
+}
+function renderResult(id){
+ const data=moduleInfo[id],state=quizState[id],card=document.getElementById(id+"-quiz-card");
+ const score=data.questions.reduce((sum,q,i)=>sum+(state.answers[i]===q.correct?1:0),0);
+ const passed=score>=2;
+ completed[id]={done:passed,score,total:data.questions.length,attempted:true};
+ saveProgress();updateProgressUI();
+ card.innerHTML=`<div class="quiz-result"><div class="result-icon" style="${passed?"":"background:var(--soft-amber);color:#b77908"}"><i class="fa-solid ${passed?"fa-check":"fa-rotate-right"}"></i></div><h3>${passed?"¡Buen trabajo!":"¡Podés volver a intentarlo!"}</h3><p>${passed?"Completaste el cuestionario de este módulo. Podés continuar con el siguiente tema.":"Necesitás al menos 2 respuestas correctas de 3 para completar el módulo. Repasá el contenido y volvé a intentarlo."}</p><div class="result-score">${score} / ${data.questions.length}</div><div class="small-muted">${passed?"Módulo completado":"Módulo todavía pendiente"}</div><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px"><button class="btn" id="${id}-retry"><i class="fa-solid fa-rotate-right"></i> Repetir cuestionario</button>${passed?`<button class="btn primary" id="${id}-continue">Continuar <i class="fa-solid fa-arrow-right"></i></button>`:""}</div></div>`;
+ document.getElementById(id+"-retry").addEventListener("click",()=>{quizState[id]={index:0,answers:[],submitted:false};renderQuestion(id)});
+ const cont=document.getElementById(id+"-continue");if(cont)cont.addEventListener("click",()=>navigate(id==="module1"?"module2":id==="module2"?"module3":"progress"));
+}
+function updateProgressUI(){
+ const ids=Object.keys(moduleInfo),done=ids.filter(id=>completed[id]?.done).length,pct=Math.round(done/ids.length*100);
+ document.getElementById("topProgress").style.width=pct+"%";document.getElementById("topProgressText").textContent=pct+"%";
+ document.querySelectorAll(".nav-btn[data-screen^='module']").forEach(b=>b.classList.toggle("completed",!!completed[b.dataset.screen]?.done));
+ ids.forEach(id=>{
+  const item=completed[id],status=document.getElementById("status-"+id),bar=document.getElementById("progress-"+id),label=document.getElementById("progress-label-"+id);
+  if(status)status.textContent=item?.done?"Completado":"Pendiente";
+  if(bar)bar.style.width=item?.done?"100%":item?.attempted?Math.round((item.score/item.total)*100)+"%":"0%";
+  if(label)label.textContent=item?.done?`Cuestionario aprobado · ${item.score}/${item.total} respuestas correctas`:item?.attempted?`Último intento · ${item.score}/${item.total} correctas`:"Cuestionario pendiente";
+ });
+ const headline=document.getElementById("progressHeadline");
+ if(headline){document.getElementById("overallBar").style.width=pct+"%";document.getElementById("overallLabel").textContent=`${done} de 3 módulos completados`;document.getElementById("progressDescription").textContent=done===3?"¡Terminaste los tres módulos de la capacitación!":`Llevás ${done} de 3 módulos completados. Seguí avanzando a tu ritmo.`;headline.textContent=done===3?"¡Felicitaciones, completaste la capacitación!":done>0?"¡Buen progreso!":"¡Vamos paso a paso!";renderProgressList()}
+}
+function renderProgressList(){
+ const host=document.getElementById("progressList");if(!host)return;
+ host.innerHTML=Object.entries(moduleInfo).map(([id,m])=>{const p=completed[id],pct=p?.done?100:p?.attempted?Math.round(p.score/p.total*100):0;return `<div class="progress-item"><div class="module-icon"><i class="fa-solid ${m.icon}"></i></div><div class="progress-item-main"><h3>${m.title}</h3><p>${p?.done?`Cuestionario aprobado · ${p.score}/${p.total} respuestas correctas`:p?.attempted?`Último intento: ${p.score}/${p.total} respuestas correctas`:"Todavía no completaste este módulo"}</p><div class="side-progress"><span style="width:${pct}%"></span></div></div><span class="pill ${p?.done?"done":""}">${p?.done?"Completado":"Pendiente"}</span><button class="btn" data-go="${id}">Abrir módulo</button></div>`}).join("");
+}
+document.querySelectorAll("[data-screen]").forEach(b=>b.addEventListener("click",()=>navigate(b.dataset.screen)));
+document.addEventListener("click",e=>{const go=e.target.closest("[data-go]");if(go)navigate(go.dataset.go);const next=e.target.closest("[data-next]");if(next)navigate(next.dataset.next)});
+document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+document.addEventListener("click",e=>{const sb=document.getElementById("sidebar");if(sb.classList.contains("open")&&!sb.contains(e.target)&&!e.target.closest("#menuToggle"))sb.classList.remove("open")});
+Object.keys(moduleInfo).forEach(buildQuiz);
+updateProgressUI();
+</script>
+</body>
+</html>
