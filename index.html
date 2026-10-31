@@ -223,7 +223,7 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
         <div class="eyebrow">Seguimiento personal</div><div class="section-heading" style="margin-top:0"><div><h2>Mi progreso</h2><p>Consultá el estado de los tres módulos de esta capacitación en este dispositivo.</p></div></div>
         <div class="hero" style="padding:27px 30px"><div class="eyebrow">Tu recorrido</div><h1 style="font-size:29px" id="progressHeadline">¡Vamos paso a paso!</h1><p id="progressDescription">Completá cada cuestionario para actualizar tu progreso.</p><div class="side-progress" style="max-width:420px;background:#ffffffb5;height:9px"><span id="overallBar"></span></div><strong id="overallLabel">0 de 3 módulos completados</strong></div>
         <div class="progress-list" id="progressList"></div>
-        <div class="welcome-note"><i class="fa-solid fa-circle-info"></i><div><strong>Importante</strong><p>Este prototipo guarda el progreso en el almacenamiento local de este navegador. No envía resultados a docentes ni sincroniza entre dispositivos. Para registrar el avance real de cada alumno se necesita una integración con un sistema de usuarios y una base de datos.</p></div></div>
+        <div class="welcome-note"><i class="fa-solid fa-circle-info"></i><div><strong>Importante</strong><p>El progreso visual se guarda en este navegador. Las respuestas de los cuestionarios se registran de forma anónima en el servidor para evaluar la capacitación, sin solicitar nombres ni correos. El progreso individual no se sincroniza entre dispositivos.</p></div></div>
         <div class="module-footer"><button class="btn" data-go="home"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</button><button class="btn primary" data-go="module1">Continuar aprendiendo <i class="fa-solid fa-arrow-right"></i></button></div>
       </section>
     </div>
@@ -232,27 +232,59 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 const hintTexts={"module1": ["Para iniciar sesión, pensá qué datos permiten identificar tu cuenta sin compartir información con otras personas.", "Si olvidaste la contraseña, buscá un procedimiento para recuperar el acceso, en lugar de crear perfiles nuevos o probar claves al azar.", "En un dispositivo compartido, pensá qué hacer al terminar para que otra persona no pueda entrar a tu cuenta."], "module2": ["Recordá que dentro de GoKollab hay distintas secciones. Antes de actuar, conocer el menú te ayuda a ubicar los contenidos.", "Si una explicación no quedó clara, los controles del reproductor te permiten revisar partes del video a tu propio ritmo.", "Los archivos adjuntos de cada clase sirven como apoyo para volver a estudiar y ampliar lo que viste en el video."], "module3": ["Pensá en dónde aparecen las publicaciones de la comunidad y las consignas compartidas por docentes.", "Adjuntar un archivo no siempre es igual a haberlo entregado: fijate qué evidencia queda en la publicación después del envío.", "Para pedir ayuda sobre una evaluación, describí qué actividad realizabas, qué pasó y qué necesitás saber, sin compartir contraseñas."]};
-// Configuración: reemplazar la URL al publicar Google Apps Script.
-const ANALYTICS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzCjG2rYo4TXPrijo6SfHb4aIvsQNjHkYD-_P1bl6q8boM-4qCJQOxJtBjLY5Hg1zVw/exec";
-// Cada selección se registra como evento independiente, sin esperar al resultado final.
-// Los eventos parciales NO se incluyen en la tasa de aprobación.
+// Registro anónimo de respuestas en Vercel Blob privado.
+const ANALYTICS_ENDPOINT = "/api/respuesta";
+const pendingEvents = [];
+async function sendLearningEvent(payload) {
+  try {
+    const response = await fetch(ANALYTICS_ENDPOINT, {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload), keepalive: true
+    });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return true;
+  } catch(err) {
+    console.warn("La respuesta no se pudo registrar:", err);
+    // Conservar una copia temporal para reintentar desde el mismo navegador.
+    try {
+      const queued = JSON.parse(localStorage.getItem("gokolab-pending-events") || "[]");
+      if(!queued.some(x=>x.eventId===payload.eventId)) queued.push(payload);
+      localStorage.setItem("gokolab-pending-events",JSON.stringify(queued.slice(-100)));
+    } catch(e) {}
+    return false;
+  }
+}
+let syncRunning=false;
+async function syncPendingEvents(){
+  if(syncRunning)return;syncRunning=true;
+  try {
+    const arr=JSON.parse(localStorage.getItem("gokolab-pending-events")||"[]");
+    const left=[];
+    for(const event of arr) {
+      try {
+        const res=await fetch(ANALYTICS_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(event)});
+        if(!res.ok) left.push(event);
+      } catch(e) {left.push(event)}
+    }
+    localStorage.setItem("gokolab-pending-events", JSON.stringify(left));
+  }catch(e){}finally{syncRunning=false}
+}
+window.addEventListener("online", syncPendingEvents);
+function newEventId(){return crypto.randomUUID()}
+function ensureSession(state){if(!state.sessionId)state.sessionId=newEventId();return state.sessionId}
 function reportSingleAnswer(id,state,questionIndex,answer){
-  if(!/^https:\/\/script\.google\.com\/macros\/s\//.test(ANALYTICS_ENDPOINT))return;
-  if(!state.sessionId)state.sessionId=(typeof crypto!=="undefined"&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+"-"+Math.random().toString(36).slice(2);
-  const payload={schema:2,module:id,session:state.sessionId,question:questionIndex+1,answer:answer,
-    nonce:state.sessionId+"-q"+(questionIndex+1)};
-  try{fetch(ANALYTICS_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});}catch(e){}
+  const session=ensureSession(state);
+  sendLearningEvent({type:"answer",module:id,session,question:questionIndex+1,answer,
+    eventId:session+"-q"+(questionIndex+1)});
 }
 function reportQuizAttempt(id,state){
-  if(!/^https:\/\/script\.google\.com\/macros\/s\//.test(ANALYTICS_ENDPOINT))return;
   const key="gokolab-anon-count-"+id;
   let n=0;try{n=Number(localStorage.getItem(key)||"0")||0;localStorage.setItem(key,String(n+1))}catch(e){}
-  const payload={schema:1,module:id,attempt:n+1,answers:state.answers.slice(0,3),
-    nonce:(typeof crypto!=="undefined"&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+"-"+Math.random().toString(36).slice(2)};
-  // no-cors: el navegador NO puede verificar la respuesta del servidor.
-  // Los resultados se confirman revisando la planilla de Google.
-  try{fetch(ANALYTICS_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});}catch(e){}
+  const session=ensureSession(state);
+  sendLearningEvent({type:"complete",module:id,session,attempt:n+1,
+    answers:state.answers.slice(0,3),eventId:session+"-complete"});
 }
+window.addEventListener("load",syncPendingEvents);
 const moduleInfo={
  module1:{title:"Conocé GoKoLab y accedé al aula",short:"Acceso al aula",icon:"fa-right-to-bracket",questions:[
   {q:"¿Qué conviene hacer para iniciar sesión?",options:["Ingresar los datos de acceso en los campos correspondientes","Compartir la contraseña con un compañero","Crear una cuenta nueva cada vez"],correct:0,explain:"Usá los datos asociados a tu cuenta. Si no podés ingresar, revisá que estén escritos correctamente."},
