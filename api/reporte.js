@@ -24,12 +24,22 @@ export default async function handler(req,res){
   }while(cursor&&iterations<100);
   const answers=records.filter(r=>r.type==='answer');
   const completes=records.filter(r=>r.type==='complete');
+  // Estadísticas basadas directamente en cada respuesta individual guardada.
+  // No se filtra por intento ni se requieren cuestionarios completos.
   const modules=Object.keys(keys).map(id=>{
-   const all=completes.filter(r=>r.module===id);
-   const first=all.filter(r=>r.attempt===1);
-   const approved=first.filter(r=>r.passed).length;
-   return {id,answers:answers.filter(r=>r.module===id).length,completed:all.length,first:first.length,approved,rate:first.length?Math.round(approved/first.length*1000)/10:null,
-    questions:keys[id].map((_,i)=>({number:i+1,total:first.length,correct:first.filter(r=>r.answers[i]===keys[id][i]).length,rate:first.length?Math.round(first.filter(r=>r.answers[i]===keys[id][i]).length/first.length*1000)/10:null}))};
+    const moduleAnswers=answers.filter(r=>r.module===id);
+    const questions=keys[id].map((correctOption,i)=>{
+      const responses=moduleAnswers.filter(r=>r.question===i+1);
+      // El acierto se calcula con la clave oficial, independientemente del campo almacenado.
+      const correct=responses.filter(r=>r.answer===correctOption).length;
+      const incorrect=responses.length-correct;
+      return {number:i+1,total:responses.length,correct,incorrect,
+        rate:responses.length?Math.round(correct/responses.length*1000)/10:null};
+    });
+    const total=questions.reduce((sum,q)=>sum+q.total,0);
+    const correct=questions.reduce((sum,q)=>sum+q.correct,0);
+    return {id,answers:total,correct,incorrect:total-correct,
+      rate:total?Math.round(correct/total*1000)/10:null,questions};
   });
   res.setHeader('Cache-Control','private, no-store');
   if(req.body?.format==='csv'){
