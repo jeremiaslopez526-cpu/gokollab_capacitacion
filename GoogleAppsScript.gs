@@ -6,11 +6,15 @@
  */
 const RESPUESTAS = { module1:[0,1,2], module2:[0,1,2], module3:[0,1,2] };
 const CABECERAS=['Fecha servidor','Módulo','N.º de intento local','Respuesta 1 (A/B/C)','Respuesta 2 (A/B/C)','Respuesta 3 (A/B/C)','Acierto 1','Acierto 2','Acierto 3','Puntaje','Aprobado','ID de envío'];
+const CABECERAS_PARCIALES=['Fecha servidor','Módulo','ID de sesión temporal','Pregunta','Respuesta elegida (A/B/C)','Acierto','ID de evento'];
 function inicializar(){
  const ss=SpreadsheetApp.getActiveSpreadsheet();
  const r=ss.getSheetByName('Respuestas')||ss.insertSheet('Respuestas');
  if(!r.getLastRow())r.appendRow(CABECERAS);
  r.setFrozenRows(1);
+ const parciales=ss.getSheetByName('RespuestasParciales')||ss.insertSheet('RespuestasParciales');
+ if(!parciales.getLastRow())parciales.appendRow(CABECERAS_PARCIALES);
+ parciales.setFrozenRows(1);
  const s=ss.getSheetByName('Resumen')||ss.insertSheet('Resumen');
  s.clear();
  s.getRange('A1').setValue('GOKOLLAB · INDICADORES DE APRENDIZAJE');
@@ -35,7 +39,29 @@ function inicializar(){
 function doPost(e){
  try{
   const obj=JSON.parse((e.postData&&e.postData.contents)||'{}');
-  if(obj.schema!==1||!Object.prototype.hasOwnProperty.call(RESPUESTAS,obj.module))throw Error('módulo');
+  if(!Object.prototype.hasOwnProperty.call(RESPUESTAS,obj.module))throw Error('módulo');
+  if(obj.schema===2){
+   if(!Number.isInteger(obj.question)||obj.question<1||obj.question>3)throw Error('pregunta');
+   if(!Number.isInteger(obj.answer)||obj.answer<0||obj.answer>2)throw Error('respuesta');
+   if(typeof obj.session!=='string'||obj.session.length<8||obj.session.length>100)throw Error('sesión');
+   if(typeof obj.nonce!=='string'||obj.nonce.length<8||obj.nonce.length>120)throw Error('id');
+   const lock=LockService.getScriptLock();lock.waitLock(10000);
+   try{
+    const ss=SpreadsheetApp.getActiveSpreadsheet();
+    const sheet=ss.getSheetByName('RespuestasParciales');
+    if(!sheet)throw Error('Ejecutar inicializar');
+    const last=sheet.getLastRow();
+    if(last>=2){
+      const start=Math.max(2,last-999);
+      const ids=sheet.getRange(start,7,last-start+1,1).getValues().flat();
+      if(ids.includes(obj.nonce))return response_('duplicado');
+    }
+    const correct=obj.answer===RESPUESTAS[obj.module][obj.question-1];
+    sheet.appendRow([new Date(),obj.module,obj.session,obj.question,'ABC'[obj.answer],correct?1:0,obj.nonce]);
+    return response_('ok');
+   }finally{lock.releaseLock();}
+  }
+  if(obj.schema!==1)throw Error('formato');
   if(!Array.isArray(obj.answers)||obj.answers.length!==3||!obj.answers.every(x=>Number.isInteger(x)&&x>=0&&x<=2))throw Error('respuestas');
   if(!Number.isInteger(obj.attempt)||obj.attempt<1||obj.attempt>999999)throw Error('intento');
   if(typeof obj.nonce!=='string'||obj.nonce.length>100||obj.nonce.length<8)throw Error('id');

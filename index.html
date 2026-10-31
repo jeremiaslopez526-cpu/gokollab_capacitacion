@@ -234,9 +234,17 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
 const hintTexts={"module1": ["Para iniciar sesión, pensá qué datos permiten identificar tu cuenta sin compartir información con otras personas.", "Si olvidaste la contraseña, buscá un procedimiento para recuperar el acceso, en lugar de crear perfiles nuevos o probar claves al azar.", "En un dispositivo compartido, pensá qué hacer al terminar para que otra persona no pueda entrar a tu cuenta."], "module2": ["Recordá que dentro de GoKollab hay distintas secciones. Antes de actuar, conocer el menú te ayuda a ubicar los contenidos.", "Si una explicación no quedó clara, los controles del reproductor te permiten revisar partes del video a tu propio ritmo.", "Los archivos adjuntos de cada clase sirven como apoyo para volver a estudiar y ampliar lo que viste en el video."], "module3": ["Pensá en dónde aparecen las publicaciones de la comunidad y las consignas compartidas por docentes.", "Adjuntar un archivo no siempre es igual a haberlo entregado: fijate qué evidencia queda en la publicación después del envío.", "Para pedir ayuda sobre una evaluación, describí qué actividad realizabas, qué pasó y qué necesitás saber, sin compartir contraseñas."]};
 // Configuración: reemplazar la URL al publicar Google Apps Script.
 const ANALYTICS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzCjG2rYo4TXPrijo6SfHb4aIvsQNjHkYD-_P1bl6q8boM-4qCJQOxJtBjLY5Hg1zVw/exec";
-function analyticsConsent(){try{return localStorage.getItem("gokolab-analytics-consent")==="yes"}catch(e){return false}}
+// Cada selección se registra como evento independiente, sin esperar al resultado final.
+// Los eventos parciales NO se incluyen en la tasa de aprobación.
+function reportSingleAnswer(id,state,questionIndex,answer){
+  if(!/^https:\/\/script\.google\.com\/macros\/s\//.test(ANALYTICS_ENDPOINT))return;
+  if(!state.sessionId)state.sessionId=(typeof crypto!=="undefined"&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+"-"+Math.random().toString(36).slice(2);
+  const payload={schema:2,module:id,session:state.sessionId,question:questionIndex+1,answer:answer,
+    nonce:state.sessionId+"-q"+(questionIndex+1)};
+  try{fetch(ANALYTICS_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});}catch(e){}
+}
 function reportQuizAttempt(id,state){
-  if(!analyticsConsent() || !/^https:\/\/script\.google\.com\/macros\/s\//.test(ANALYTICS_ENDPOINT))return;
+  if(!/^https:\/\/script\.google\.com\/macros\/s\//.test(ANALYTICS_ENDPOINT))return;
   const key="gokolab-anon-count-"+id;
   let n=0;try{n=Number(localStorage.getItem(key)||"0")||0;localStorage.setItem(key,String(n+1))}catch(e){}
   const payload={schema:1,module:id,attempt:n+1,answers:state.answers.slice(0,3),
@@ -288,9 +296,8 @@ function navigate(screen){
 function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2800)}
 function buildQuiz(id){
  const data=moduleInfo[id],host=document.getElementById("quiz-"+id);
- host.innerHTML=`<div class="quiz-top"><h2><i class="fa-solid fa-list-check" style="color:var(--blue);margin-right:8px"></i>Comprobá lo aprendido</h2><span class="quiz-count" id="${id}-quiz-count"></span></div><div class="panel quiz-card" id="${id}-quiz-card"></div><div class="analytics-consent"><label><input type="checkbox" class="analytics-optin" ${analyticsConsent()?"checked":""}><span><strong>Ayudanos a mejorar esta capacitación</strong>: autorizo a enviar mis respuestas y puntaje de forma anónima para analizar los resultados generales.</span></label><small>No pedimos nombre ni correo. Es opcional y no afecta la aprobación. Los envíos no identifican personas y pueden incluir varios intentos del mismo navegador.</small></div>`;
- host.querySelector(".analytics-optin").addEventListener("change",e=>{try{localStorage.setItem("gokolab-analytics-consent",e.target.checked?"yes":"no")}catch(err){}});
- quizState[id]={index:0,answers:[],submitted:false};
+ host.innerHTML=`<div class="quiz-top"><h2><i class="fa-solid fa-list-check" style="color:var(--blue);margin-right:8px"></i>Comprobá lo aprendido</h2><span class="quiz-count" id="${id}-quiz-count"></span></div><div class="panel quiz-card" id="${id}-quiz-card"></div><div class="analytics-consent" role="note"><strong><i class="fa-solid fa-chart-simple" aria-hidden="true"></i> Evaluación del plan de capacitación</strong><small style="margin:5px 0 0;display:block">Cada respuesta se registra al seleccionarla. Al finalizar el cuestionario, se registra además el puntaje, el módulo y el número de intento local para analizar resultados generales. No se solicita nombre ni correo. Los datos se almacenan en una planilla privada.</small></div>`;
+ quizState[id]={index:0,answers:[],submitted:false,sessionId:null};
  renderQuestion(id);
 }
 function renderQuestion(id){
@@ -302,6 +309,7 @@ function renderQuestion(id){
  card.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",()=>{
   if(state.answers[state.index]!==undefined)return;
   state.answers[state.index]=Number(b.dataset.answer);
+  reportSingleAnswer(id,state,state.index,state.answers[state.index]);
   const isCorrect=state.answers[state.index]===q.correct;
   card.querySelectorAll(".answer").forEach((a,i)=>{a.disabled=true;if(i===q.correct)a.classList.add("correct");else if(i===state.answers[state.index])a.classList.add("wrong")});
   const fb=document.getElementById(id+"-feedback");fb.className="quiz-feedback show "+(isCorrect?"good":"bad");fb.innerHTML=`<strong>${isCorrect?"¡Correcto!":"Repasemos esta respuesta."}</strong> ${q.explain}`;
@@ -320,7 +328,7 @@ function renderResult(id){
  saveProgress();updateProgressUI();
  reportQuizAttempt(id,state);
  card.innerHTML=`<div class="quiz-result"><div class="result-icon" style="${passed?"":"background:var(--soft-amber);color:#b77908"}"><i class="fa-solid ${passed?"fa-check":"fa-rotate-right"}"></i></div><h3>${passed?"¡Buen trabajo!":"¡Podés volver a intentarlo!"}</h3><p>${passed?"Completaste el cuestionario de este módulo. Podés continuar con el siguiente tema.":"Necesitás al menos 2 respuestas correctas de 3 para completar el módulo. Repasá el contenido y volvé a intentarlo."}</p><div class="result-score">${score} / ${data.questions.length}</div><div class="small-muted">${passed?"Módulo completado":"Módulo todavía pendiente"}</div><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px"><button class="btn" id="${id}-retry"><i class="fa-solid fa-rotate-right"></i> Repetir cuestionario</button>${passed?`<button class="btn primary" id="${id}-continue">Continuar <i class="fa-solid fa-arrow-right"></i></button>`:""}</div></div>`;
- document.getElementById(id+"-retry").addEventListener("click",()=>{quizState[id]={index:0,answers:[],submitted:false};renderQuestion(id)});
+ document.getElementById(id+"-retry").addEventListener("click",()=>{quizState[id]={index:0,answers:[],submitted:false,sessionId:null};renderQuestion(id)});
  const cont=document.getElementById(id+"-continue");if(cont)cont.addEventListener("click",()=>navigate(id==="module1"?"module2":id==="module2"?"module3":"progress"));
 }
 function updateProgressUI(){
