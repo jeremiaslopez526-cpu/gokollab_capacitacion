@@ -38,6 +38,10 @@ body.high-contrast{--blue:#1648aa;--muted:#39475e;--line:#7b8799;--bg:#fff;--sof
 body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
 .access-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 @media (prefers-contrast:more){:root{--blue:#1648aa;--muted:#39475e;--line:#7b8799}}
+
+/* Reporte opcional de aprendizaje */
+.analytics-consent{margin-top:14px;padding:13px 15px;border:1px solid #cbd9f7;border-radius:11px;background:#f5f9ff;color:#344054;font-size:12px;line-height:1.6}
+.analytics-consent label{display:flex;align-items:flex-start;gap:9px;cursor:pointer}.analytics-consent input{margin-top:3px;accent-color:#215fd0}.analytics-consent small{display:block;margin:6px 0 0 25px;color:#596579}
 </style>
 </head>
 <body>
@@ -228,6 +232,19 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 const hintTexts={"module1": ["Para iniciar sesión, pensá qué datos permiten identificar tu cuenta sin compartir información con otras personas.", "Si olvidaste la contraseña, buscá un procedimiento para recuperar el acceso, en lugar de crear perfiles nuevos o probar claves al azar.", "En un dispositivo compartido, pensá qué hacer al terminar para que otra persona no pueda entrar a tu cuenta."], "module2": ["Recordá que dentro de GoKollab hay distintas secciones. Antes de actuar, conocer el menú te ayuda a ubicar los contenidos.", "Si una explicación no quedó clara, los controles del reproductor te permiten revisar partes del video a tu propio ritmo.", "Los archivos adjuntos de cada clase sirven como apoyo para volver a estudiar y ampliar lo que viste en el video."], "module3": ["Pensá en dónde aparecen las publicaciones de la comunidad y las consignas compartidas por docentes.", "Adjuntar un archivo no siempre es igual a haberlo entregado: fijate qué evidencia queda en la publicación después del envío.", "Para pedir ayuda sobre una evaluación, describí qué actividad realizabas, qué pasó y qué necesitás saber, sin compartir contraseñas."]};
+// Configuración: reemplazar la URL al publicar Google Apps Script.
+const ANALYTICS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzCjG2rYo4TXPrijo6SfHb4aIvsQNjHkYD-_P1bl6q8boM-4qCJQOxJtBjLY5Hg1zVw/exec";
+function analyticsConsent(){try{return localStorage.getItem("gokolab-analytics-consent")==="yes"}catch(e){return false}}
+function reportQuizAttempt(id,state){
+  if(!analyticsConsent() || !/^https:\/\/script\.google\.com\/macros\/s\//.test(ANALYTICS_ENDPOINT))return;
+  const key="gokolab-anon-count-"+id;
+  let n=0;try{n=Number(localStorage.getItem(key)||"0")||0;localStorage.setItem(key,String(n+1))}catch(e){}
+  const payload={schema:1,module:id,attempt:n+1,answers:state.answers.slice(0,3),
+    nonce:(typeof crypto!=="undefined"&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+"-"+Math.random().toString(36).slice(2)};
+  // no-cors: el navegador NO puede verificar la respuesta del servidor.
+  // Los resultados se confirman revisando la planilla de Google.
+  try{fetch(ANALYTICS_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});}catch(e){}
+}
 const moduleInfo={
  module1:{title:"Conocé GoKoLab y accedé al aula",short:"Acceso al aula",icon:"fa-right-to-bracket",questions:[
   {q:"¿Qué conviene hacer para iniciar sesión?",options:["Ingresar los datos de acceso en los campos correspondientes","Compartir la contraseña con un compañero","Crear una cuenta nueva cada vez"],correct:0,explain:"Usá los datos asociados a tu cuenta. Si no podés ingresar, revisá que estén escritos correctamente."},
@@ -271,7 +288,8 @@ function navigate(screen){
 function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2800)}
 function buildQuiz(id){
  const data=moduleInfo[id],host=document.getElementById("quiz-"+id);
- host.innerHTML=`<div class="quiz-top"><h2><i class="fa-solid fa-list-check" style="color:var(--blue);margin-right:8px"></i>Comprobá lo aprendido</h2><span class="quiz-count" id="${id}-quiz-count"></span></div><div class="panel quiz-card" id="${id}-quiz-card"></div>`;
+ host.innerHTML=`<div class="quiz-top"><h2><i class="fa-solid fa-list-check" style="color:var(--blue);margin-right:8px"></i>Comprobá lo aprendido</h2><span class="quiz-count" id="${id}-quiz-count"></span></div><div class="panel quiz-card" id="${id}-quiz-card"></div><div class="analytics-consent"><label><input type="checkbox" class="analytics-optin" ${analyticsConsent()?"checked":""}><span><strong>Ayudanos a mejorar esta capacitación</strong>: autorizo a enviar mis respuestas y puntaje de forma anónima para analizar los resultados generales.</span></label><small>No pedimos nombre ni correo. Es opcional y no afecta la aprobación. Los envíos no identifican personas y pueden incluir varios intentos del mismo navegador.</small></div>`;
+ host.querySelector(".analytics-optin").addEventListener("change",e=>{try{localStorage.setItem("gokolab-analytics-consent",e.target.checked?"yes":"no")}catch(err){}});
  quizState[id]={index:0,answers:[],submitted:false};
  renderQuestion(id);
 }
@@ -300,6 +318,7 @@ function renderResult(id){
  const passed=score>=2;
  completed[id]={done:passed,score,total:data.questions.length,attempted:true};
  saveProgress();updateProgressUI();
+ reportQuizAttempt(id,state);
  card.innerHTML=`<div class="quiz-result"><div class="result-icon" style="${passed?"":"background:var(--soft-amber);color:#b77908"}"><i class="fa-solid ${passed?"fa-check":"fa-rotate-right"}"></i></div><h3>${passed?"¡Buen trabajo!":"¡Podés volver a intentarlo!"}</h3><p>${passed?"Completaste el cuestionario de este módulo. Podés continuar con el siguiente tema.":"Necesitás al menos 2 respuestas correctas de 3 para completar el módulo. Repasá el contenido y volvé a intentarlo."}</p><div class="result-score">${score} / ${data.questions.length}</div><div class="small-muted">${passed?"Módulo completado":"Módulo todavía pendiente"}</div><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px"><button class="btn" id="${id}-retry"><i class="fa-solid fa-rotate-right"></i> Repetir cuestionario</button>${passed?`<button class="btn primary" id="${id}-continue">Continuar <i class="fa-solid fa-arrow-right"></i></button>`:""}</div></div>`;
  document.getElementById(id+"-retry").addEventListener("click",()=>{quizState[id]={index:0,answers:[],submitted:false};renderQuestion(id)});
  const cont=document.getElementById(id+"-continue");if(cont)cont.addEventListener("click",()=>navigate(id==="module1"?"module2":id==="module2"?"module3":"progress"));

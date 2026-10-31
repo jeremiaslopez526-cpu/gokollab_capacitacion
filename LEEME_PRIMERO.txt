@@ -1,0 +1,10 @@
+GOKOLLAB - REPORTE ANÓNIMO CONECTADO
+
+1. El index.html incluye la URL de Apps Script proporcionada.
+2. Este paquete contiene la web completa y la carpeta assets.
+3. Subí el contenido de ESTA carpeta a la raíz del repositorio GitHub, sin subir la carpeta contenedora.
+4. Revisá el nuevo deploy de Vercel.
+5. Marcá consentimiento y completá un cuestionario de prueba.
+6. Comprobá la nueva fila en Google Sheets > Respuestas y el resumen.
+7. La prueba genera un dato real de ejemplo: podés eliminarlo de Sheets después.
+8. El navegador no puede confirmar el envío (no-cors); verificá en la planilla.
