@@ -42,6 +42,46 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
 /* Reporte opcional de aprendizaje */
 .analytics-consent{margin-top:14px;padding:13px 15px;border:1px solid #cbd9f7;border-radius:11px;background:#f5f9ff;color:#344054;font-size:12px;line-height:1.6}
 .analytics-consent label{display:flex;align-items:flex-start;gap:9px;cursor:pointer}.analytics-consent input{margin-top:3px;accent-color:#215fd0}.analytics-consent small{display:block;margin:6px 0 0 25px;color:#596579}
+
+/* Plan de capacitación: sección informativa, no altera los módulos ni el reporte */
+.plan-hero{background:linear-gradient(120deg,#eaf1ff,#eefaf6);border:1px solid #dce7f5;border-radius:20px;padding:30px 32px;display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:24px}
+.plan-hero h1{font-size:clamp(26px,3vw,35px);line-height:1.2;letter-spacing:-.8px;margin:6px 0 12px}
+.plan-hero p{max-width:660px;color:#53627a;font-size:14px;line-height:1.75;margin:0}
+.plan-symbol{width:90px;height:90px;border-radius:25px;background:#fff;color:var(--blue);display:grid;place-items:center;font-size:38px;box-shadow:0 8px 30px #3156a010;flex-shrink:0}
+.plan-actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 24px}
+.plan-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:28px}
+.plan-summary-card{border:1px solid var(--line);background:#fff;border-radius:14px;padding:18px;display:flex;gap:12px;align-items:flex-start}
+.plan-summary-card i{display:grid;place-items:center;flex-shrink:0;width:38px;height:38px;border-radius:11px;background:#eaf1ff;color:var(--blue);font-size:16px}
+.plan-summary-card strong{font-size:13px;display:block;margin-bottom:5px}
+.plan-summary-card span{color:var(--muted);font-size:12px;line-height:1.65}
+.plan-section-title{font-size:20px;letter-spacing:-.5px;margin:27px 0 15px;display:flex;align-items:center;gap:11px}
+.plan-section-title .plan-number{font-size:11px;letter-spacing:0;color:#1d4ed8;background:#eaf1ff;border-radius:9px;min-width:31px;height:31px;display:grid;place-items:center}
+.plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.plan-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px 21px;min-width:0}
+.plan-card h3{font-size:15px;margin:0 0 10px;display:flex;align-items:center;gap:9px}
+.plan-card h3 i{color:var(--blue)}
+.plan-card p,.plan-card li{font-size:12px;color:#596579;line-height:1.8}
+.plan-card p{margin:0 0 10px}.plan-card p:last-child{margin-bottom:0}
+.plan-card ul{margin:9px 0 0;padding-left:20px}.plan-card li+li{margin-top:6px}
+.plan-wide{grid-column:1/-1}
+.plan-roadmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.plan-roadmap-item{background:#fff;border:1px solid var(--line);border-radius:15px;padding:21px;position:relative}
+.plan-roadmap-item .plan-step{font-weight:800;font-size:10px;color:var(--blue);letter-spacing:1px}
+.plan-roadmap-item h3{font-size:16px;margin:12px 0 8px}
+.plan-roadmap-item p{font-size:12px;color:#596579;line-height:1.75;margin:0 0 15px}
+.plan-roadmap-item .btn{width:100%}
+.plan-note{padding:18px 20px;border:1px solid #d6e7fc;border-radius:14px;background:#f7fbff;font-size:12px;color:#53627a;line-height:1.8;margin-top:16px}
+.plan-pdf{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.plan-pdf-head{padding:19px 21px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.plan-pdf-head h2{font-size:17px;margin:0 0 5px}.plan-pdf-head p{color:var(--muted);font-size:12px;margin:0}
+.plan-pdf details{border-top:1px solid var(--line)}
+.plan-pdf summary{padding:15px 21px;cursor:pointer;color:var(--blue);font-size:12px;font-weight:700;list-style-position:inside}
+.plan-pdf iframe{width:100%;height:620px;border:0;display:block;background:#f4f6f9}
+@media(max-width:900px){.plan-summary,.plan-roadmap{grid-template-columns:1fr}.plan-hero{padding:25px}.plan-symbol{width:64px;height:64px;font-size:28px}}
+@media(max-width:650px){.plan-grid{grid-template-columns:1fr}.plan-hero{display:block}.plan-symbol{display:none}.plan-actions .btn{width:100%}.plan-pdf-head{align-items:flex-start;flex-direction:column}.plan-pdf iframe{height:480px}}
+body.high-contrast .plan-hero,body.high-contrast .plan-note{background:var(--bg);color:var(--ink);border:1px solid var(--ink)}
+body.high-contrast .plan-card,body.high-contrast .plan-summary-card,body.high-contrast .plan-roadmap-item,body.high-contrast .plan-pdf{border-color:currentColor}
+
 </style>
 </head>
 <body>
@@ -52,6 +92,7 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
     <nav class="nav">
       <button class="nav-btn active" data-screen="home"><i class="fa-solid fa-house"></i> Bienvenida <i class="fa-solid fa-circle-check done-dot"></i></button>
       <button class="nav-btn" data-screen="about"><i class="fa-solid fa-users"></i> Quiénes somos</button>
+      <button class="nav-btn" data-screen="plan"><i class="fa-solid fa-clipboard-list"></i> Plan de capacitación</button>
     </nav>
     <div class="nav-label">Tu recorrido</div>
     <nav class="nav">
@@ -110,6 +151,74 @@ body.high-contrast .small-muted,body.high-contrast .module-card p{color:#263449}
           <div class="team-member"><div class="avatar">MB</div><strong>Martín Boiero</strong><span>Integración y datos</span></div>
         </div>
         <div class="module-footer"><button class="btn" data-go="home"><i class="fa-solid fa-arrow-left"></i> Volver al inicio</button><button class="btn primary" data-go="module1">Empezar <i class="fa-solid fa-arrow-right"></i></button></div>
+      </section>
+
+
+      <section class="screen" id="screen-plan" aria-labelledby="plan-main-title">
+        <div class="plan-hero">
+          <div>
+            <div class="eyebrow">Conocé la propuesta formativa</div>
+            <h1 id="plan-main-title">Plan de capacitación</h1>
+            <p>Conocé por qué diseñamos esta capacitación, qué vas a aprender y cómo se organiza el recorrido de GoKollab Training. Podés consultar el contenido en esta página o descargar el documento completo.</p>
+          </div>
+          <div class="plan-symbol" aria-hidden="true"><i class="fa-solid fa-book-open-reader"></i></div>
+        </div>
+        <div class="plan-actions">
+          <a class="btn primary" href="assets/plan-capacitacion-gokollab.pdf" download="Plan-de-Capacitacion-GoKollab.pdf"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Descargar plan en PDF</a>
+          <a class="btn" href="assets/plan-capacitacion-gokollab.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Abrir PDF</a>
+          <button class="btn" type="button" data-go="module1"><i class="fa-solid fa-play" aria-hidden="true"></i> Empezar capacitación</button>
+        </div>
+        <div class="plan-summary" aria-label="Características del plan">
+          <div class="plan-summary-card"><i class="fa-solid fa-clock" aria-hidden="true"></i><div><strong>A tu ritmo</strong><span>Modalidad asincrónica y autoadministrada, sin una secuencia rígida.</span></div></div>
+          <div class="plan-summary-card"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><div><strong>3 módulos prácticos</strong><span>Acceso, aula y clases, actividades y comunicación.</span></div></div>
+          <div class="plan-summary-card"><i class="fa-solid fa-universal-access" aria-hidden="true"></i><div><strong>Recursos accesibles</strong><span>Material audiovisual, apoyo escrito y opciones de contraste.</span></div></div>
+        </div>
+
+        <h2 class="plan-section-title"><span class="plan-number">01</span> Fundamentación y destinatarios</h2>
+        <div class="plan-grid">
+          <article class="plan-card"><h3><i class="fa-solid fa-bullseye" aria-hidden="true"></i> ¿Para qué existe el plan?</h3><p>Su propósito es desarrollar competencias digitales esenciales para que los estudiantes puedan gestionar de manera autónoma su trayectoria académica en GoKollab, sin que la tecnología se convierta en una barrera.</p><p>Promueve la autonomía para consultar materiales, entregar trabajos y comunicarse con docentes y compañeros, junto con la inclusión digital y el respeto por diferentes ritmos de aprendizaje.</p></article>
+          <article class="plan-card"><h3><i class="fa-solid fa-users" aria-hidden="true"></i> ¿A quiénes está dirigido?</h3><p>El plan está pensado para personas adultas de 25 a 45 años matriculadas en programas formativos, que pueden combinar el estudio con responsabilidades laborales y familiares.</p><p>Contempla participantes con experiencia en herramientas digitales y otros que necesitan instrucciones más detalladas y acompañamiento inicial.</p></article>
+          <article class="plan-card plan-wide"><h3><i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i> Diagnóstico de partida</h3><p>La diversidad de habilidades tecnológicas requiere una propuesta empática: explicaciones claras, desafíos prácticos accesibles y validación de cada paso para reducir la incertidumbre y favorecer la confianza en el uso del aula virtual.</p></article>
+        </div>
+
+        <h2 class="plan-section-title"><span class="plan-number">02</span> Objetivos de aprendizaje</h2>
+        <div class="plan-grid">
+          <article class="plan-card plan-wide"><h3><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> Objetivo general</h3><p>Gestionar de forma autónoma el aula virtual: desde el primer acceso hasta la navegación de contenidos, el desarrollo de actividades y la utilización de los canales de comunicación siguiendo las pautas de cursado.</p></article>
+          <article class="plan-card plan-wide"><h3><i class="fa-solid fa-list-check" aria-hidden="true"></i> Objetivos específicos</h3><ul>
+            <li>Crear una contraseña segura e ingresar desde el enlace recibido por correo electrónico.</li>
+            <li>Ubicar, visualizar y descargar materiales teóricos y guías de actividades.</li>
+            <li>Elegir los canales de comunicación adecuados para consultar a docentes o compañeros.</li>
+            <li>Conocer la dinámica de la plataforma para cursar con tranquilidad y concentrarse en el aprendizaje.</li>
+          </ul></article>
+        </div>
+
+        <h2 class="plan-section-title"><span class="plan-number">03</span> Contenidos y recorrido</h2>
+        <div class="plan-roadmap">
+          <article class="plan-roadmap-item"><span class="plan-step">MÓDULO 01</span><h3>Acceso</h3><p>Orientación inicial, configuración de cuenta, ingreso seguro y solución de inconvenientes frecuentes al iniciar sesión.</p><button class="btn" type="button" data-go="module1">Ver módulo 1 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></article>
+          <article class="plan-roadmap-item"><span class="plan-step">MÓDULO 02</span><h3>Aula y clases</h3><p>Exploración de la interfaz, reproducción de clases grabadas, controles del video y descarga de archivos adjuntos.</p><button class="btn" type="button" data-go="module2">Ver módulo 2 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></article>
+          <article class="plan-roadmap-item"><span class="plan-step">MÓDULO 03</span><h3>Actividades</h3><p>Presentación de tareas, formatos, plazos de entrega y participación en foros y espacios de comunicación.</p><button class="btn" type="button" data-go="module3">Ver módulo 3 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></article>
+        </div>
+        <div class="plan-note"><strong>Además de los módulos:</strong> el recorrido contempla una bienvenida, la presentación de quiénes somos y una sección de seguimiento donde revisar el progreso y los resultados. Podés seguir los módulos en orden o volver directamente al tema que necesitás consultar.</div>
+
+        <h2 class="plan-section-title"><span class="plan-number">04</span> Metodología y recursos</h2>
+        <div class="plan-grid">
+          <article class="plan-card"><h3><i class="fa-solid fa-route" aria-hidden="true"></i> Aprendizaje flexible</h3><p>La capacitación permite navegar libremente y aprender según las necesidades del momento. Podés hacer todo el recorrido al inicio o volver a una explicación puntual cuando surja una duda en el aula real.</p><p>Este enfoque busca favorecer la aplicación inmediata de lo aprendido y la resolución autónoma de problemas.</p></article>
+          <article class="plan-card"><h3><i class="fa-solid fa-laptop" aria-hidden="true"></i> Recursos didácticos</h3><ul><li>Sitio web independiente disponible desde computadora y dispositivos móviles.</li><li>Videos tutoriales y apoyo textual.</li><li>Pistas de audio acompañadas de transcripciones.</li><li>Opciones visuales como alto contraste.</li><li>Infografías, guías descargables en PDF y materiales de lectura.</li></ul></article>
+          <article class="plan-card plan-wide"><h3><i class="fa-solid fa-database" aria-hidden="true"></i> Fuentes del diseño</h3><p>La propuesta parte de encuestas diagnósticas realizadas con Google Forms y de documentación técnica oficial del sistema, adaptada a un formato más claro para quienes están aprendiendo a utilizar la plataforma.</p></article>
+        </div>
+
+        <h2 class="plan-section-title"><span class="plan-number">05</span> Tiempo, evaluación y seguimiento</h2>
+        <div class="plan-grid">
+          <article class="plan-card"><h3><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Tiempo y secuencia</h3><p>La modalidad es asincrónica y autoadministrada: podés completar el recorrido en una sesión o utilizarlo de forma permanente como centro de ayuda. Los microcontenidos permiten repasar una acción específica cuando la necesitás.</p></article>
+          <article class="plan-card"><h3><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i> Evaluación formativa</h3><p>Al final de cada módulo, el cuestionario «Comprobá lo aprendido» permite revisar los conocimientos adquiridos. La retroalimentación automática y las pistas en audio y texto ayudan a comprender las respuestas y los errores.</p></article>
+          <article class="plan-card plan-wide"><h3><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Seguimiento y mejora continua</h3><p>Un panel de uso administrativo reúne los resultados de las respuestas en gráficos y porcentajes. Su finalidad es detectar preguntas que presentan mayores dificultades, analizar los módulos y orientar mejoras en los recursos de capacitación.</p></article>
+        </div>
+
+        <div class="plan-pdf" id="plan-documento">
+          <div class="plan-pdf-head"><div><h2><i class="fa-regular fa-file-pdf" style="color:#d33e4b;margin-right:8px" aria-hidden="true"></i> Documento original</h2><p>Plan de Capacitación - Plataforma GoKollab Training · PDF completo de 5 páginas</p></div><a class="btn primary" href="assets/plan-capacitacion-gokollab.pdf" download="Plan-de-Capacitacion-GoKollab.pdf"><i class="fa-solid fa-download" aria-hidden="true"></i> Descargar PDF</a></div>
+          <details><summary>Ver el PDF dentro de esta página</summary><iframe src="assets/plan-capacitacion-gokollab.pdf#toolbar=1" title="Vista del documento original del plan de capacitación" loading="lazy"></iframe></details>
+        </div>
+        <div class="module-footer"><button class="btn" data-go="about"><i class="fa-solid fa-arrow-left"></i> Quiénes somos</button><button class="btn primary" data-go="module1">Ir al módulo 1 <i class="fa-solid fa-arrow-right"></i></button></div>
       </section>
 
       <section class="screen module-screen" id="screen-module1" data-module="1">
@@ -302,7 +411,7 @@ const moduleInfo={
   {q:"Si tenés una duda sobre una evaluación, ¿qué conviene hacer?",options:["Compartir tu contraseña","Mandar mensajes repetidos sin explicar el problema","Escribir una consulta clara en el canal de comunicación disponible"],correct:2,explain:"Explicá la actividad, qué ocurrió y qué necesitás aclarar."}
  ]}
 };
-const screenTitles={home:["Bienvenida a GoKoLab","Tu guía para aprender a usar el aula virtual"],about:["Quiénes somos","Sobre esta capacitación"],module1:["Módulo 1 · Acceso al aula","Conocé GoKoLab y accedé al aula"],module2:["Módulo 2 · Aula y clases","Navegá y aprendé dentro del aula"],module3:["Módulo 3 · Actividades","Evaluaciones, tareas y seguimiento"],progress:["Mi progreso","Seguimiento de tu capacitación"]};
+const screenTitles={home:["Bienvenida a GoKoLab","Tu guía para aprender a usar el aula virtual"],about:["Quiénes somos","Sobre esta capacitación"],plan:["Plan de capacitación","Objetivos, contenidos, metodología y evaluación"],module1:["Módulo 1 · Acceso al aula","Conocé GoKoLab y accedé al aula"],module2:["Módulo 2 · Aula y clases","Navegá y aprendé dentro del aula"],module3:["Módulo 3 · Actividades","Evaluaciones, tareas y seguimiento"],progress:["Mi progreso","Seguimiento de tu capacitación"]};
 let currentScreen="home";
 try{if(localStorage.getItem("gokolab-high-contrast")==="on")document.body.classList.add("high-contrast")}catch(e){}
 const contrastButton=document.getElementById("contrastToggle");
